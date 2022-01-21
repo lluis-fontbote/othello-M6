@@ -1,14 +1,23 @@
 {
-  "name": "othello",
+  "name": "Othello",
   "version": "1.0.0",
   "description": "",
-  "main": "scripts.js",
+  "main": "Board.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Lluís Fontboté",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lluis-fontbote/othello-M6.git"
+  },
+  "keywords": [],
+  "author": "",
   "license": "ISC",
-  "dependencies": {
-    "sweetalert2": "^11.2.2"
+  "bugs": {
+    "url": "https://github.com/lluis-fontbote/othello-M6/issues"
+  },
+  "homepage": "https://github.com/lluis-fontbote/othello-M6#readme",
+  "devDependencies": {
+    "laravel-mix": "^6.0.41"
   }
 }
