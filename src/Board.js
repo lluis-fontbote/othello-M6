@@ -1,43 +1,22 @@
-class Board {
-    
-    constructor(dimensions) {
-        this.dimensions = dimensions;
-    }
+function Board(dimensions) {
+    this.dimensions = dimensions;
+}
 
-    // generate() {
-    //     let acumulatTauler = `` ;
-    //     let numCasella = 0;
-    //     let midaCaselles = (100 / this.dimensions);
+Board.prototype.getHTML = function() {
+    let acumulatTauler = `` ;
+    let numCasella = 0;
+    let midaCaselles = (100 / this.dimensions);
 
-    //     for (let i = 0;  i < this.dimensions;  i++) {
-    //         acumulatTauler += `<div class="fila" style="width:100%; height:${midaCaselles}%;">`;
-    //         for (let j = 0;  j < this.dimensions;  j++) {
-    //             acumulatTauler += `<div class="casella" style="width:${midaCaselles}%; height:100%;" 
-    //                                 id="${numCasella}"></div>`;
-    //             numCasella++;
-    //         }
-    //         acumulatTauler += `</div>`;
-    //     }
-    //     return acumulatTauler;
-    // }
-
-    generate() {
-        let acumulatTauler = `` ;
-        let numCasella = 0;
-        let midaCaselles = (100 / this.dimensions);
-
-        for (let i = 0;  i < this.dimensions;  i++) {
-            acumulatTauler += `<div class="fila" style="width:100%; height:${midaCaselles}%;">`;
-            for (let j = 0;  j < this.dimensions;  j++) {
-                acumulatTauler += `<div class="casella" style="width:${midaCaselles}%; height:100%;" 
-                                    id="${numCasella}"></div>`;
-                numCasella++;
-            }
-            acumulatTauler += `</div>`;
+    for (let i = 0;  i < this.dimensions;  i++) {
+        acumulatTauler += `<div class="fila" style="width:100%; height:${midaCaselles}%;">`;
+        for (let j = 0;  j < this.dimensions;  j++) {
+            acumulatTauler += `<div class="casella" style="width:${midaCaselles}%; height:100%;" 
+                                id="${numCasella}"></div>`;
+            numCasella++;
         }
-        return acumulatTauler;
+        acumulatTauler += `</div>`;
     }
-
+    return acumulatTauler;
 }
 
 export { Board };
