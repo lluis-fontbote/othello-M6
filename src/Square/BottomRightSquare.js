@@ -1,9 +1,8 @@
 import { Square } from './Square';
 
-function BottomRightSquare(row, col, squareSize) {
+function BottomRightSquare(row, col, squareSize, board) {
 
-    Square.call(this, row, col, squareSize);
-    this.html.addEventListener('click', this.placeToken);
+    Square.call(this, row, col, squareSize, board);
 }
 
 BottomRightSquare.prototype = Object.create(Square.prototype);

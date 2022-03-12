@@ -3,7 +3,6 @@ import { Square } from './Square';
 function BottomLeftSquare(row, col, squareSize, board) {
 
     Square.call(this, row, col, squareSize, board);
-    this.html.addEventListener('click', this.placeToken);
 }
 
 BottomLeftSquare.prototype = Object.create(Square.prototype);

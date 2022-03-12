@@ -1,9 +1,8 @@
 import { Square } from './Square';
 
-function LeftSquare(row, col, squareSize) {
+function LeftSquare(row, col, squareSize, board) {
 
-    Square.call(this, row, col, squareSize);
-    this.html.addEventListener('click', this.placeToken);
+    Square.call(this, row, col, squareSize, board);
 }
 
 LeftSquare.prototype = Object.create(Square.prototype);
