@@ -58,3 +58,19 @@ body {
 	border: 0.5vh solid rgb(96, 158, 4);
 	margin: 0;
 }
+
+.token {
+	width: 90%;
+	height: 90%;
+	position: relative;
+	margin: 0 auto;
+	border-radius: 100%;
+}
+
+.token--white {
+	background-color: white;
+}
+
+.token--black {
+	background-color: black;
+}
