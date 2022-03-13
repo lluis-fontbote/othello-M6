@@ -41,6 +41,25 @@ body {
 	margin: 0;
 }
 
+.casella:hover {
+	opacity: 50%;
+	cursor: pointer;
+}
+
+.hint {
+	background-color: rgba(0,0,0,.1);
+    padding: 4.2%;
+    background-clip: content-box;
+    border-radius: 50%;
+    box-sizing: border-box;
+    pointer-events: none;
+    width: 30%;
+    height: 30%;
+    position: relative;
+    margin: 0 auto;
+    border-radius: 100%;
+    top: 35%;
+}
 
 /* Marcador */
 .player {
