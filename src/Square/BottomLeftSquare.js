@@ -30,20 +30,8 @@ BottomLeftSquare.prototype.getRivalTokensAround = function() {
         rivalTokensAround.push(this.board.squares[row][col+1].token);
     }
 
-    console.log(rivalTokensAround);
-
     return rivalTokensAround;
     
 }
-
-// TopLeftSquare.prototype.placeToken = function() {
-
-//     if 
-
-// }
-
-// TopLeftSquare.prototype.isValid = function() {
-
-// }
 
 export { BottomLeftSquare };

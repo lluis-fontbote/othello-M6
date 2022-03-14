@@ -1,3 +1,5 @@
+import { Token } from "../Token";
+
 function Square(row, col, squareSize, board) {
 
     this.html = document.createElement('div');
@@ -12,8 +14,73 @@ function Square(row, col, squareSize, board) {
     this.token = null;
     this.board = board;
 
-    this.html.square = this;
-    this.html.addEventListener('click', this.checkMovement);
+    this.html.object = this;
+
+    this.html.addEventListener('click', this.handleClick);
+
+}
+
+/**
+ * Mira si el jugador que té el torn pot tirar aquí.
+ * - Si és així, col·loca el token a la casella 
+ * , dona la volta als tokens que toqui i canvia de torn
+ * - Si no pot, s'avisa a l'usuari
+ */
+Square.prototype.handleClick = function() {
+    let movement = this.object.board.currentPlayer.canMoveHere(this.object);
+        if (movement != false) {
+            this.object.token = new Token(this.object.board.currentPlayer, this.object);
+            
+            // Ens carreguem els hints abans d'insertar els tokens
+            for (let hint of document.querySelectorAll('.hint')) {
+                hint.remove();
+                
+            }
+
+            this.appendChild(this.object.token.html);
+            for (let tokenToFlip of movement.tokensToFlip) {
+                tokenToFlip.flip();
+            }
+            this.object.board.changeTurn();
+        }
+}
+
+/**
+ * Comprova si, seguint la direcció en què s'ha trobat el token rival,
+ * es troba una casella buida on el jugador que té el torn pugui col·locar
+ * la fitxa per a fer bocata
+ * @param {Token} token 
+ * @returns null | movement
+ */
+Square.prototype.esPotFerBocata = function(rivalToken) {
+    let rowDiff = rivalToken.square.row - this.row;
+    let colDiff = rivalToken.square.col - this.col;
+    let movement = {
+        casella: null,
+        tokensToFlip: [
+            rivalToken
+        ]
+    };
+
+    for (let i = this.row + (rowDiff * 2), j = this.col + (colDiff * 2);  
+         i >= 0  &&  i < this.board.dimensions  &&  j >= 0  &&  j < this.board.dimensions;  
+         i += rowDiff, j += colDiff) 
+    {
+        if (this.board.squares[i][j].token == null) {
+            // console.log('casellaValida= '  + i +'-'+j);
+            movement.casella = this.board.squares[i][j];
+            return movement;
+        
+        } else if (this.board.squares[i][j].token.player != this.board.currentPlayer) {
+            movement.tokensToFlip.push(this.board.squares[i][j].token);
+        
+        } else {
+            return null
+        } 
+    } 
+
+    return null;
+    
 }
 
 Square.prototype.getRivalTokensAround = function() {
@@ -25,35 +92,5 @@ Square.prototype.getRivalTokensAround = function() {
         // No mirar una fila a sota (+1) de la fila squares.length -1 / dimensions -1
         return false;
 }
-
-Square.prototype.checkMovement = function(e) {
-
-    //* 1- Està buida?
-    console.log(this.square);
-    if (this.square.token === null) {
-        console.log('hola');
-        //* 2- Té alguna fitxa rival a les caselles del voltant?
-        // console.log(Square);
-        let rivalTokensAround = this.square.getRivalTokensAround();
-        console.log(rivalTokensAround);
-        // if (rivalTokensAround > 0) {
-        //     //* 3- Hi ha fitxes del jugador que fa el moviment
-        //     //* per a fer bocata?
-        //     let bocates = [];
-        //     for (let rivalToken of rivalTokensAround) {
-                
-        //     }
-        // }
-    } else {
-        alert('No pots moure. La casella està ocupada');
-        console.log(this);
-    }
-
-}
-
-// Square.prototype.place = function(token) {
-//     this.token = token
-//     document.getElementById
-// }
 
 export { Square };

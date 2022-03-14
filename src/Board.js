@@ -17,9 +17,9 @@ function Board(dimensions, blackPlayer, whitePlayer) {
     this.squareSize = (100 / this.dimensions);
     this.blackPlayer = blackPlayer;
     this.whitePlayer = whitePlayer;
-    this.currentPlayer = this.blackPlayer;
+    this.currentPlayer = null;
+    this.tornsSeguitsSenseTirar = 0;
 
-    console.log(this);
     // Generate HTML and fill array of squares with null values
     for (let row = 0;  row < this.dimensions;  row++) {
         let filaArray = [];
@@ -53,15 +53,6 @@ function Board(dimensions, blackPlayer, whitePlayer) {
                 square = new CentralSquare(row, col, this.squareSize, this);
             }
 
-
-            // let square = new Square()
-            // let square = document.createElement('div');
-            // square.classList.add('casella');
-            // square.style = `width:${this.squareSize}%; height:100%;`;
-            // square.dataset.row = row;
-            // square.dataset.col = col;
-            // square.id = `${row}-${col}`;
-
             filaHTML.appendChild(square.html);
             filaArray.push(square);
         }
@@ -74,90 +65,50 @@ function Board(dimensions, blackPlayer, whitePlayer) {
     // Caldria fer subclasses i que cadascuna cridés el mètode setFirst4Tokens(),
     // I es colocarien el tokens en caselles diferents depenent de si el tauler és 8x8, 10x10 o 
     // segurament placeToken no hauria de ser un mètode de Board sinó de Square
-    this.placeToken(3, 3, 'white', this.whitePlayer);
-    this.placeToken(3, 4, 'black', this.blackPlayer);
-    this.placeToken(4, 3, 'black', this.blackPlayer);
-    this.placeToken(4, 4, 'white', this.whitePlayer);
+    this.placeToken(3, 3, this.whitePlayer);
+    this.placeToken(3, 4, this.blackPlayer);
+    this.placeToken(4, 3, this.blackPlayer);
+    this.placeToken(4, 4, this.whitePlayer);
+
+
+    // Iniciem el torn calculant les tirades possibles
+    this.changeTurn();
 }
 
-Board.prototype.placeToken = function(row, col, color) {
-    // let targetSquare = this.squares[row][col];
-    // if (this.movementIsValid(targetSquare, color)) {
-    //     // clau: posició de this i de rivalToken.square per saber la direcció cap a on buscar bocata
-    //     targetSquare.flipRivalTokensBetweenThisAnd(tokenBocata);
-    //     //! això hauria de retornar l'objecte flippedTokens, amb tots els tokens q ha girat.
-    //     //! Caldria llavors cridar les funcions getRivalTokensAround() i getBocatas 
-    //     //! per si al girar han sorgit nous bocates
-    //     //! Cada vegada que es gira una fitxa pot haver noves fitxes que s'hagin de girar.
-    //     //! Caldria tenir un comptador de fitxes girades, i fins q no estigui a 0 no canviar el torn
-    //     // aplica token.flip() en tots els tokens rivals situats en mig
-    //     targetSquare.setToken(currentUserColor);
-        
-    //     this.revisarFitxesGirades();
-    // }
-
-
-    let token = new Token(color);
+Board.prototype.placeToken = function(row, col, player) {
+    let token = new Token(player, this.squares[row][col]);
     this.squares[row][col].token = token;
     document.getElementById(`${row}-${col}`).appendChild(token.html);
 }
 
-/**
- * Checks if the given movement is legal
- * @param {number} row 
- * @param {number} col 
- * @param {string} color 
- */
-// Board.prototype.movementIsValid = function(targetSquare, currentUserColor) {
-    // let targetSquare = this.squares[row][col];
-    // console.log(this.squares[row][col+1])
-    // console.log(this.squares[row+1][col+1])
+Board.prototype.changeTurn = function() {
+    this.currentPlayer == this.blackPlayer ?  this.currentPlayer = this.whitePlayer : this.currentPlayer = this.blackPlayer;
 
-    // 2- Comprovar que l'usuari pot efectuar la jugada. Condicions:
-        // 2.1 Alguna de les caselles del voltant tenen fitxa rival
-        // 2.2 Per cadascuna de les q hagi trobat caldrà que llavors busqui la fitxa del propi color amb la qual fer el bocata
-        //     Per fer-ho: seguir la direcció en què he trobat la fitxa enemiga fins que trobi fitxa pròpia (pot tirar) 
-        //     o casella buida o s'acabi el tauler (no pot tirar)
-        // 2.3 Si trobo fitxa pròpia per a bocata, girar totes les fitxes rivals embotides. I crear new Token i col·locar-la on deia l'usuari
-        // 2.4 Si aquesta no ha acabat, acabar cerca de fitxes rivals al voltant de la nova fitxa col·locada
-        // 2.5 Repetir cerca de fitxes rivals, ara al voltant de cadascuna de les fitxes voltejades. 
-        //     I així recursivament   
+    this.currentPlayer.calculateMovementsAvailable();
+    if (this.currentPlayer.movementsAvailable.length > 0) {
+        this.tornsSeguitsSenseTirar = 0;
+        this.showMovementAvailable();
+
+    } else if (this.currentPlayer.movementsAvailable == 0  &&  this.tornsSeguitsSenseTirar == 0) {
+        this.tornsSeguitsSenseTirar++;
+        this.changeTurn();
     
-    // 3 - Canviar torn, tant si no pot tirar com si ja ho ha fet
-    // 4- Si cap dels dos jugadors ha pogut tirar, acabar partida 
+    } else {
+        this.endGame();
+    }
+}
 
-   
-    //? Alguna de les caselles del voltant tenen fitxa rival ?
-    // let rivalTokensAround = targetSquare.getRivalTokensAround();
-    // if (rivalTokensAround == 0) {   
-    //     return false;
+Board.prototype.showMovementAvailable = function() {
+    for (let movement of this.currentPlayer.movementsAvailable) {
+        let hint = document.createElement('div');
+        hint.classList.add('hint');
+        movement.casella.html.appendChild(hint);
+    }
+}
 
-    // } else {
-    //     //? Hi ha bocates possibles ?
-    //     //* Si és així els retornem
-        
+Board.prototype.endGame = function() {
+    console.log('endgame')
+}
 
-    //     let bocates = [];
-    //     for (let rivalToken of rivalTokensAround) {
-    //         let bocata = targetSquare.findBocata(rivalToken);
-    //         //? bocata podria ser un objecte que contingués totes les caselles a girar
-    //         if (bocata != null) {
-    //             bocates.push(bocata);
-    //         }
-    //         if (tokenBocata != null) {
-    //             // clau: posició de this i de rivalToken.square per saber la direcció cap a on buscar bocata
-    //             this.flipRivalTokensBetweenThisAnd(tokenBocata);
-    //             // aplica token.flip() en tots els tokens rivals situats en mig
-    //             targetSquare.setToken(currentUserColor);
-
-    //         }
-
-    //     }
-    // }
-    
-
-        
-
-// }
 
 export { Board };
