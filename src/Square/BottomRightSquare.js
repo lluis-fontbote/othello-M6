@@ -7,14 +7,34 @@ function BottomRightSquare(row, col, squareSize, board) {
 
 BottomRightSquare.prototype = Object.create(Square.prototype);
 
-// TopLeftSquare.prototype.placeToken = function() {
+/**
+ * Checks how many rival tokens there are around the square
+ * @param {Player} currentPlayer 
+ * @returns array of Tokens
+ */
+BottomRightSquare.prototype.getRivalTokensAround = function() {
+    let rivalTokensAround = [];
+    let currentPlayer = this.board.currentPlayer;
+    let row = this.row;
+    let col = this.col;
+    let squares = this.board.squares;
+    
+    // one square up and one left
+    if (squares[row-1][col-1].token != null  &&  squares[row-1][col-1].token.player != currentPlayer) {
+        rivalTokensAround.push(squares[row-1][col-1].token);
+    }
 
-//     if 
+    // one square up
+    if (squares[row-1][col].token != null  &&  squares[row-1][col].token.player != currentPlayer) {
+        rivalTokensAround.push(squares[row-1][col].token);
+    }
 
-// }
+    // one square left
+    if (squares[row][col-1].token != null  &&  squares[row][col-1].token.player != currentPlayer) {
+        rivalTokensAround.push(squares[row][col-1].token);
+    }
 
-// TopLeftSquare.prototype.isValid = function() {
-
-// }
+    return rivalTokensAround;
+}
 
 export { BottomRightSquare };

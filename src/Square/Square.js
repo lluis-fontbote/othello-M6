@@ -83,14 +83,13 @@ Square.prototype.esPotFerBocata = function(rivalToken) {
     
 }
 
+/**
+ * Checks how many rival tokens there are around the square
+ * @param {Player} currentPlayer 
+ * @returns array of Tokens
+ */
 Square.prototype.getRivalTokensAround = function() {
     //* Different implementation depending on child object
-    // Per a no sortir-se de l'array:
-        // No mirar a l'esquerra (-1) de la columna 0
-        // No mirar una fila amunt (-1) de a¡la fila 0
-        // No mirar una columna a la dreta (+1) de la columna row.length -1 / dimensions -1
-        // No mirar una fila a sota (+1) de la fila squares.length -1 / dimensions -1
-        return false;
 }
 
 export { Square };

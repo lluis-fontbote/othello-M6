@@ -17,21 +17,24 @@ BottomLeftSquare.prototype.getRivalTokensAround = function() {
     let currentPlayer = this.board.currentPlayer;
     let row = this.row;
     let col = this.col;
-
-    if (this.board.squares[row-1][col].token != null  &&  this.board.squares[row-1][col].token.player != currentPlayer) {
-        rivalTokensAround.push(this.board.squares[row-1][col].token);
-    }
+    let squares = this.board.squares;
     
-    if (this.board.squares[row-1][col+1].token != null  &&  this.board.squares[row-1][col+1].token.player != currentPlayer) {
-        rivalTokensAround.push(this.board.squares[row-1][col+1].token);
+    // one square up
+    if (squares[row-1][col].token != null  &&  squares[row-1][col].token.player != currentPlayer) {
+        rivalTokensAround.push(squares[row-1][col].token);
     }
 
-    if (this.board.squares[row][col+1].token != null  &&  this.board.squares[row][col+1].token.player != currentPlayer) {
-        rivalTokensAround.push(this.board.squares[row][col+1].token);
+    // one square up and one right
+    if (squares[row-1][col+1].token != null  &&  squares[row-1][col+1].token.player != currentPlayer) {
+        rivalTokensAround.push(squares[row-1][col+1].token);
     }
+
+    // one square right
+    if (squares[row][col+1].token != null  &&  squares[row][col+1].token.player != currentPlayer) {
+        rivalTokensAround.push(squares[row][col+1].token);
+    }  
 
     return rivalTokensAround;
-    
 }
 
 export { BottomLeftSquare };
