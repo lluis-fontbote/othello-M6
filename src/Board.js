@@ -20,7 +20,7 @@ function Board(dimensions, blackPlayer, whitePlayer) {
     this.currentPlayer = null;
     this.tornsSeguitsSenseTirar = 0;
 
-    // Generate HTML and fill array of squares with null values
+    // Generate HTML and fill array of squares
     for (let row = 0;  row < this.dimensions;  row++) {
         let filaArray = [];
         let filaHTML = document.createElement('div');
@@ -62,13 +62,10 @@ function Board(dimensions, blackPlayer, whitePlayer) {
     }
     
     // Place first 4 tokens
-    // Caldria fer subclasses i que cadascuna cridés el mètode setFirst4Tokens(),
-    // I es colocarien el tokens en caselles diferents depenent de si el tauler és 8x8, 10x10 o 
-    // segurament placeToken no hauria de ser un mètode de Board sinó de Square
-    this.placeToken(3, 3, this.whitePlayer);
-    this.placeToken(3, 4, this.blackPlayer);
-    this.placeToken(4, 3, this.blackPlayer);
-    this.placeToken(4, 4, this.whitePlayer);
+    this.placeToken(this.dimensions / 2 - 1,  this.dimensions / 2 - 1, this.whitePlayer);
+    this.placeToken(this.dimensions / 2 - 1, this.dimensions / 2, this.blackPlayer);
+    this.placeToken(this.dimensions / 2, this.dimensions / 2 - 1, this.blackPlayer);
+    this.placeToken(this.dimensions / 2, this.dimensions / 2, this.whitePlayer);
 
 
     // Iniciem el torn calculant les tirades possibles
