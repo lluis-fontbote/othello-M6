@@ -11,20 +11,25 @@
 <body>
     <div class="board" id="board"></div>
 
-    <div class="player" style="top:30%" id="whitePlayer">
-      <p id="blackPlayerName"></p>
-      <p id="blackPlayerScore"></p>
-    </div>
-    <div class="player" style="top:70%" id="blackPlayer">
-      <p id="whitePlayerName"></p>
-      <p id="whitePlayerScore"></p>
+    <div class="player row" style="top:50%" id="scoreboard">
+      <div class="col-6" id="blackPlayer" style="border: 0.5vh solid rgb(96, 158, 4);">
+        <p id="blackPlayerName"></p>
+        <p id="blackPlayerScore"></p>
+      </div>
+      <div class="col-6" id="whitePlayer" style="border: 0.5vh solid rgb(96, 158, 4);">
+        <p id="whitePlayerName"></p>
+        <p id="whitePlayerScore"></p>
+      </div>
+      <div class="col-12" style="border: 0.5vh solid rgb(96, 158, 4);">
+        <p id="info"></p>
+      </div>
     </div>
 
     <div class="modal fade" id="modalInici" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">New message</h5>
+              <h5 class="modal-title" id="exampleModalLabel">Configuració inicial</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -61,6 +66,25 @@
           </div>
         </div>
     </div>
+
+
+    <!-- Modal de final de partida -->
+    <div class="modal fade" id="modalFinal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Dades finals</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+          </div>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tancar</button>
+              <button class="btn btn-primary" id="playAgainBtn">Torna a jugar</button>
+          </div>
+        </div>
+      </div>
+  </div>
 
     <!-- <script src="node_modules/sweetalert2/dist/sweetalert2.all.min.js"></script> -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>

@@ -67,14 +67,14 @@ body {
 	color: rgb(96, 158, 4);
 	/* width: 100vw; */
 	width: 35%;
-	height: 38vh;
+	height: 50vh;
 	position: absolute;
 	left: 75%;
 	-ms-transform: translate(-50%, -50%); /* IE 9 */
 	-webkit-transform: translate(-50%, -50%); /* Safari */
 	transform: translate(-50%, -50%); /* Standard syntax */
 	text-align: center;
-	border: 0.5vh solid rgb(96, 158, 4);
+	/* border: 0.5vh solid rgb(96, 158, 4); */
 	margin: 0;
 }
 

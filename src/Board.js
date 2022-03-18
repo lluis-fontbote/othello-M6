@@ -81,6 +81,8 @@ Board.prototype.placeToken = function(row, col, player) {
 Board.prototype.changeTurn = function() {
     this.currentPlayer == this.blackPlayer ?  this.currentPlayer = this.whitePlayer : this.currentPlayer = this.blackPlayer;
 
+    this.updateGameStatus();
+
     this.currentPlayer.calculateMovementsAvailable();
     if (this.currentPlayer.movementsAvailable.length > 0) {
         this.tornsSeguitsSenseTirar = 0;
@@ -104,7 +106,46 @@ Board.prototype.showMovementAvailable = function() {
 }
 
 Board.prototype.endGame = function() {
-    console.log('endgame')
+    this.endgame = true;
+    if (this.blackPlayer.movementsAvailable == 0  &&  this.whitePlayer.movementsAvailable == 0) {
+        if (this.blackPlayer.tokens.length + this.whitePlayer.tokens.length  ==  this.dimensions*this.dimensions) {
+            document.getElementById('info').innerHTML = `Fi de la partida`;
+            if (this.blackPlayer.tokens.length > this.whitePlayer.tokens.length) {
+                document.getElementById('info').innerHTML += `<br>Guanyador: ${this.blackPlayer.name}`;
+            
+            } else if (this.blackPlayer.tokens.length < this.whitePlayer.tokens.length) {
+                document.getElementById('info').innerHTML += `<br>Guanyador: ${this.whitePlayer.name}`;
+                
+            } else {
+                document.getElementById('info').innerHTML += `<br>Empat`;
+            }
+        
+        } else {
+            document.getElementById('info').innerHTML = `Cap jugador pot tirar. Fi de la partida`;
+        } 
+    }
+    this.showEndGameModal();
+}
+
+Board.prototype.updateGameStatus = function() {
+    document.getElementById('blackPlayerScore').innerHTML = this.blackPlayer.tokens.length;
+    document.getElementById('whitePlayerScore').innerHTML = this.whitePlayer.tokens.length;
+
+    if (this.tornsSeguitsSenseTirar == 0) {
+        document.getElementById('info').innerHTML = `Torn per a ${this.currentPlayer.name}`;
+    
+    } else if (this.tornsSeguitsSenseTirar == 1  &&  !this.endGame) {
+        document.getElementById('info').innerHTML = `L'altre jugador no pot tirar. Torna a ser el torn de ${this.currentPlayer.name}`;
+    
+    }
+}
+
+Board.prototype.showEndGameModal = function() {
+    const modalFinal = new bootstrap.Modal(document.getElementById('modalFinal'));
+    let playersFinalResults = document.getElementById('scoreboard').cloneNode(true);
+    playersFinalResults.classList.remove('player');
+    document.querySelector('#modalFinal .modal-body').appendChild(playersFinalResults);
+    modalFinal.toggle();
 }
 
 

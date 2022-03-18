@@ -42,6 +42,12 @@ Square.prototype.handleClick = function() {
                 tokenToFlip.flip();
             }
             this.object.board.changeTurn();
+        } else {
+            let casella = this;
+            this.style.backgroundColor = 'red';
+            setTimeout(function() {
+                casella.style.backgroundColor = `rgb(96, 158, 4)`;
+            }, 250, casella)
         }
 }
 
